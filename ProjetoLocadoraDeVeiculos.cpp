@@ -314,6 +314,7 @@ void listarAluguelPorTodosOsParametros (/*COLOCAR OS PARÂMETROS*/) {
 }
 //******************************************************
 
+
 //Função principal que chama as demais funções do código
 main() {
     setlocale(LC_ALL, "Portuguese");
