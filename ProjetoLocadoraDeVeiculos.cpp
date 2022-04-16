@@ -141,11 +141,24 @@ void criarExemplosVeiculos(Veiculos veiculo[], int *contVeiculo) {
 void criarExemplosAlugueis(Alugueis aluguel[], int *contAluguel) {
     //Exemplo Aluguel1
     strcpy(aluguel[*contAluguel].cpf, "111.111.111-11");
-    strcpy(aluguel[*contAluguel].codigo, "MT001");  
-    (*contAluguel)++;
+    strcpy(aluguel[*contAluguel].codigo, "MT001");
+	aluguel[*contAluguel].dataEntrada.dia = 15;
+	aluguel[*contAluguel].dataEntrada.mes = 04;
+	aluguel[*contAluguel].dataEntrada.ano = 2022;
+	aluguel[*contAluguel].dataSaida.dia = 15;
+	aluguel[*contAluguel].dataSaida.mes = 04;
+	aluguel[*contAluguel].dataSaida.ano = 2022;
+	(*contAluguel)++;
     //Exemplo Aluguel2
     strcpy(aluguel[*contAluguel].cpf, "222.222.222-22");
     strcpy(aluguel[*contAluguel].codigo, "MT002");
+	aluguel[*contAluguel].dataEntrada.dia = 10;
+	aluguel[*contAluguel].dataEntrada.mes = 04;
+	aluguel[*contAluguel].dataEntrada.ano = 2022;
+	aluguel[*contAluguel].dataSaida.dia = 12;
+	aluguel[*contAluguel].dataSaida.mes = 0;
+	aluguel[*contAluguel].dataSaida.ano = 2022;
+
     (*contAluguel)++;
 }
 //******************************************************
@@ -186,6 +199,52 @@ void incluirCliente (Clientes cliente[], int *contCliente ){
     scanf("%d", &cliente[*contCliente].dataNasc.ano);
     (*contCliente)++;
 }
+
+void incluirVeiculo (Veiculos veiculo[], int *contVeiculo ){
+    printf("\n\nDigite os dados do Veículo %d\n", *contVeiculo + 1);
+    printf("\nDigite o código: ");
+    scanf("%s", &veiculo[*contVeiculo].codigo);
+    //COLOCAR A FUNÇÃO VERIFICA CÓDIGO 0 se o código existe mensagem que 
+    printf("\nDigite a descricao: ");
+    scanf("%s", &veiculo[*contVeiculo].descricao);
+    printf("\nDigite a categoria: ");
+    scanf("%s", &veiculo[*contVeiculo].categoria);
+    printf("\nDigite a capacidade: ");
+    scanf("%d", &veiculo[*contVeiculo].capacidade);
+    fflush(stdin);
+    printf("\nDigite o tipo de combustível: ");
+    scanf("%s", &veiculo[*contVeiculo].combustivel);
+    printf("\nDigite o modelo: ");
+    scanf("%s", &veiculo[*contVeiculo].modelo);
+    printf("\nDigite o ano: ");
+    scanf("%d", &veiculo[*contVeiculo].anoVeiculo.ano);
+    (*contVeiculo)++;
+}
+
+void incluirAluguel (Alugueis aluguel[], int *contAluguel ){
+	printf("\n\nDigite os dados do aluguel %d\n", *contAluguel + 1);
+	printf("\nDigite o cpf: ");
+	scanf("%s", &aluguel[*contAluguel].cpf);
+	//verifica se CPF está cadastrado
+    printf("\nDigite o código do veículo: ");
+	scanf("%s", &aluguel[*contAluguel].codigo);  
+	//verifica se Código está cadastrado
+	printf("\nDigite o dia da data de entrada: ");
+    scanf("%d", &aluguel[*contAluguel].dataEntrada.dia);
+    printf("\nDigite o mês de nascimento: ");
+    scanf("%d", &aluguel[*contAluguel].dataEntrada.mes);
+    printf("\nDigite o ano de nascimento: ");
+    scanf("%d", &aluguel[*contAluguel].dataEntrada.ano);
+	printf("\nDigite o dia da data de saída: ");
+    scanf("%d", &aluguel[*contAluguel].dataSaida.dia);
+    printf("\nDigite o mês de nascimento: ");
+    scanf("%d", &aluguel[*contAluguel].dataSaida.mes);
+    printf("\nDigite o ano de nascimento: ");
+    scanf("%d", &aluguel[*contAluguel].dataSaida.ano);
+    (*contAluguel)++;
+}
+
+
 //******************************************************
 //Função que lista os dados de todos os clientes
 void listarTodosClientes(Clientes cliente[], int *contCliente) {
@@ -202,11 +261,59 @@ void listarTodosClientes(Clientes cliente[], int *contCliente) {
         printf("\n\n--------------------------------------------");
     }
 }
+
+//******************************************************
+//Função que lista os dados de todos os veículos
+void listarTodosVeiculos(Veiculos veiculo[], int *contVeiculo ){
+    system("cls"); //limpa a tela
+    int i;
+    for(i = 0; i < *contVeiculo; i++) {
+        printf("\n\nDados do Veículo %d\n", i + 1);
+        printf("\nCódigo: %s", veiculo[i].codigo);
+        printf("\nDescrição: %s", veiculo[i].descricao);
+        printf("\nCategoria: %s", veiculo[i].categoria);  
+        printf("\nCapacidade: %d", veiculo[i].capacidade);
+        printf("\nTipo de combustivel: %s", veiculo[i].combustivel);
+        printf("\nModelo: %s", veiculo[i].modelo);
+        printf("\nAno: %d", veiculo[i].anoVeiculo.ano);
+        printf("\n\n--------------------------------------------");
+    }
+}
+
+//******************************************************
+//Função que lista os dados de todos os alugueis
+void listarTodosAlugueis(Alugueis aluguel[], int *contAluguel ){
+    system("cls"); //limpa a tela
+    int i;
+    for(i = 0; i < *contAluguel; i++) {
+        printf("\n\nDados do Aluguel %d\n", i + 1);
+        printf("\nCpf do Cliente: %s", aluguel[i].cpf);
+        printf("\nCódigo do veículo: %s", aluguel[i].codigo);
+        printf("\nData de Entrada: %d/%d/%d", aluguel[i].dataEntrada.dia, aluguel[i].dataEntrada.mes, aluguel[i].dataEntrada.ano);
+        printf("\nData de Saída: %d/%d/%d", aluguel[i].dataSaida.dia, aluguel[i].dataSaida.mes, aluguel[i].dataSaida.ano);
+        printf("\n\n--------------------------------------------");
+    }
+}
+
 //******************************************************
 //Função que lista o cliente por CPF
 void listarClientesPorCpf (Clientes cliente[], int *contCliente) {
 }
 //******************************************************
+
+
+//******************************************************
+//Função que lista o veículo por código
+void listarVeiculoPorCodigo (Veiculos veiculo[], int *contVeiculo) {
+}
+//******************************************************
+
+//******************************************************
+//Função que lista o veículo por código
+void listarAluguelPorTodosOsParametros (/*COLOCAR OS PARÂMETROS*/) {
+}
+//******************************************************
+
 //Função principal que chama as demais funções do código
 main() {
     setlocale(LC_ALL, "Portuguese");
@@ -217,23 +324,23 @@ main() {
     printf("--------------------------------------------");
     printf("\n\n----------- LOCADORA DE VEÍCULOS -----------");
     printf("\n\n--------------------------------------------\n\n");
-    //criaExemplosClientes(cliente, &contCliente);
-    //criaExemplosVeiculos(veiculo, &contVeiculo);
-    //criaExemplosAlugueis(aluguel, &contAluguel);
+    criarExemplosClientes(cliente, &contCliente);
+    criarExemplosVeiculos(veiculo, &contVeiculo);
+    criarExemplosAlugueis(aluguel, &contAluguel);
     //listarTodosClientes(cliente, &contCliente);
+    //listarTodosVeiculos(veiculo, &contVeiculo);
+    //listarTodosAlugueis(aluguel, &contAluguel);
     do{
         menuPrincipal();
         printf("Digite a opção desejada: ");
         scanf("%d", &opcaoMenu);
         switch(opcaoMenu){
-            //Submenu de Clientes
+            
             case 1:
-                system("cls");
-                subMenuClientes();
-                printf("Digite a opção desejada: ");
-                scanf("%d", &opcaoMenu);
+                
                 do{
-                    //subMenu();
+                	system("cls");
+                    subMenuClientes();
                     printf("\nDigite a opção desejada: ");
                     scanf("%d", &opcaoSubmenu);
                     switch(opcaoSubmenu){
@@ -270,24 +377,24 @@ main() {
                 while (opcaoSubmenu!=6);
             //Submenu de Veículos
             case 2:
-                printf("\n\t----- VEÍCULOS -----\n");
-                system("cls");
-                subMenuClientes();
-                printf("Digite a opção desejada: ");
-                scanf("%d", &opcaoMenu);
+                
                 do{
-                    //submenu();
+                    system("cls");
+                    subMenuVeiculos();
                     printf("\nDigite a opção desejada: ");
                     scanf("%d", &opcaoSubmenu);
                     switch(opcaoSubmenu){
                         case 1:
                             printf("\nListar todos: ");
+                            listarTodosVeiculos(veiculo, &contVeiculo); 
+                            system("Pause");     
                             break;
                         case 2:
                             printf("\nListar por código: ");    
                             break;
                         case 3:
                             printf("\nIncluir: ");
+                            incluirVeiculo(veiculo, &contVeiculo);
                             break;
                         case 4:
                             printf("\nAlterar: ");  
@@ -307,18 +414,21 @@ main() {
             case 3:
                 printf("\n\t----- ALUGUÉIS -----\n");
                 do{
-                    //submenu();
+                    subMenuAlugueis();
                     printf("\nDigite a opção desejada: ");
                     scanf("%d", &opcaoSubmenu);
                     switch(opcaoSubmenu){
                         case 1:
                             printf("\nListar todos: ");
+                            listarTodosAlugueis(aluguel, &contAluguel); 
+                            system("Pause");     
                             break;
                         case 2:
                             printf("\nListar por código: ");    
                             break;
                         case 3:
                             printf("\nIncluir: ");
+                            incluirAluguel(aluguel, &contAluguel);
                             break;
                         case 4:
                             printf("\nAlterar: ");  
@@ -338,7 +448,7 @@ main() {
             case 4:
                 printf("\n\t----- RELATÓRIOS -----\n");
                 do{
-                    //submenu();
+                    subMenuRelatorios();
                     printf("\nDigite a opção desejada: ");
                     scanf("%d", &opcaoSubmenu);
                     switch(opcaoSubmenu){
