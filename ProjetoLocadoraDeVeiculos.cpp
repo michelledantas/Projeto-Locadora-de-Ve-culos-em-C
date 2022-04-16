@@ -375,6 +375,7 @@ main() {
                     }
                 }
                 while (opcaoSubmenu!=6);
+                break;
             //Submenu de Veículos
             case 2:
                 
@@ -410,6 +411,7 @@ main() {
                     }   
                 }
                 while (opcaoSubmenu!=6);
+                break;
             //Submenu de Alugueis
             case 3:
                 printf("\n\t----- ALUGUÉIS -----\n");
@@ -444,6 +446,7 @@ main() {
                     }   
                 }
                 while (opcaoSubmenu!=6);
+                break;
             //Submenu de Relatórios
             case 4:
                 printf("\n\t----- RELATÓRIOS -----\n");
@@ -475,6 +478,7 @@ main() {
                     }   
                 }
                 while (opcaoSubmenu!=6);
+                break;
             default:
                 printf("\nDigite uma opção válida");            
         }
