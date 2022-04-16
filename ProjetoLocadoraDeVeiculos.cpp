@@ -3,12 +3,14 @@ Tema 2: Locadora de Automóveis
 Alunos: Michelle Tiburcio e Thiane Deprá Saravalle
 Prontuários: SC3017311 e SC3013073
 Etapa 1*/
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #include<locale.h>
 #include<time.h> 
 #define max 10
+
 //******************************************************
 //***********Definindo as Estruturas de Dados***********
 //******************************************************
@@ -16,12 +18,14 @@ Etapa 1*/
 typedef struct {
     int dia, mes, ano;
 } Data;
+
 //******************************************************
 //Estrutura de Clientes
 typedef struct {
     char cpf[15], nome[50], endereco[80], telFixo[15], celular[15];
     Data dataNasc;
 } Clientes;
+
 //******************************************************
 //Estrutura de Veículos
 typedef struct {
@@ -29,15 +33,18 @@ typedef struct {
     int capacidade;
     Data anoVeiculo;
 } Veiculos;
+
 //******************************************************
 //Estrutura de Aluguéis
 typedef struct {
     char cpf[15], codigo[6];
     Data dataEntrada, dataSaida;
 } Alugueis;
+
 //******************************************************
 //*****************Definindo as Funções*****************
 //******************************************************
+
 //******************************************************
 //Função que mostra o Menu principal
 void menuPrincipal() {
@@ -103,6 +110,7 @@ void criarExemplosClientes(Clientes cliente[], int *contCliente) {
     cliente[*contCliente].dataNasc.mes = 03;
     cliente[*contCliente].dataNasc.ano = 1990;
     (*contCliente)++;
+    
     //Exemplo Cliente2
     strcpy(cliente[*contCliente].cpf, "222.222.222-22");
     strcpy(cliente[*contCliente].nome, "Joao da Silva");    
@@ -126,6 +134,7 @@ void criarExemplosVeiculos(Veiculos veiculo[], int *contVeiculo) {
     strcpy(veiculo[*contVeiculo].modelo, "HB20");
     veiculo[*contVeiculo].anoVeiculo.ano = 2020;
     (*contVeiculo)++;
+    
     //Exemplo Veiculo2
     strcpy(veiculo[*contVeiculo].codigo, "MT002");
     strcpy(veiculo[*contVeiculo].descricao, "motor 1.8, automático, ABS");
@@ -149,6 +158,7 @@ void criarExemplosAlugueis(Alugueis aluguel[], int *contAluguel) {
 	aluguel[*contAluguel].dataSaida.mes = 04;
 	aluguel[*contAluguel].dataSaida.ano = 2022;
 	(*contAluguel)++;
+	
     //Exemplo Aluguel2
     strcpy(aluguel[*contAluguel].cpf, "222.222.222-22");
     strcpy(aluguel[*contAluguel].codigo, "MT002");
@@ -158,7 +168,6 @@ void criarExemplosAlugueis(Alugueis aluguel[], int *contAluguel) {
 	aluguel[*contAluguel].dataSaida.dia = 12;
 	aluguel[*contAluguel].dataSaida.mes = 0;
 	aluguel[*contAluguel].dataSaida.ano = 2022;
-
     (*contAluguel)++;
 }
 //******************************************************
@@ -298,9 +307,23 @@ void listarTodosAlugueis(Alugueis aluguel[], int *contAluguel ){
 //******************************************************
 //Função que lista o cliente por CPF
 void listarClientesPorCpf (Clientes cliente[], int *contCliente) {
+	//Thiane vai fazer
+	for(i = 0; i < *contCliente; i++) {
+        printf("\n\nDados do Cliente %d\n", i + 1);
+        printf("\nNome: %s", cliente[i].nome);
+        printf("\nCPF: %s", cliente[i].cpf);
+        printf("\nEndereço: %s", cliente[i].endereco);  
+        printf("\nTelefone Fixo: %s", cliente[i].telFixo);
+        printf("\nCelular: %s", cliente[i].telFixo);
+        printf("\nData de Nascimento: %d/%d/%d", cliente[i].dataNasc.dia, cliente[i].dataNasc.mes, cliente[i].dataNasc.ano);
+        printf("\n\n--------------------------------------------");
+    }
 }
 //******************************************************
-
+//Função que lista o cliente por CPF
+void alterarDadosClientes(Clientes cliente[], int *contCliente) {
+	//Thiane vai fazer
+}
 
 //******************************************************
 //Função que lista o veículo por código
