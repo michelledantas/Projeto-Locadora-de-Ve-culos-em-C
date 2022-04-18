@@ -597,10 +597,12 @@ void listarAluguelPorChaves(Alugueis aluguel[], Clientes cliente[], Veiculos vei
         		printf("\nData de Saída: %d/%d/%d", aluguel[posicaoAluguel].dataSaida.dia, aluguel[posicaoAluguel].dataSaida.mes, aluguel[posicaoAluguel].dataSaida.ano);
         		printf("\n\n--------------------------------------------------\n");				
 				
-			} else
+			} else {
 				printf("\nNão exite aluguéis com cpf %s e código %s nessas datas.", cpf, codigo);
+				printf("\n\n--------------------------------------------------\n");
+			}
 			
-		} else{
+		} else {
 			printf("\nO código %s não é cadastrado.", codigo);
     		printf("\n\n--------------------------------------------------\n");
 		}			
@@ -614,16 +616,125 @@ void listarAluguelPorChaves(Alugueis aluguel[], Clientes cliente[], Veiculos vei
 //******************************************************
 //MENU[3][3] Função que inclui um novo aluguel
 void incluirAluguel(Alugueis aluguel[], Clientes cliente[], Veiculos veiculo[], int *contAluguel, int *contCliente, int *contVeiculo) {
-//Mi	
+	char cpf [15], codigo [6];
+    int posicaoAluguel, posicaoCpf, posicaoCodigo, diaEntrada, mesEntrada, anoEntrada, diaSaida, mesSaida, anoSaida;
+    
+	fflush(stdin);
+    printf("\nDigite o cpf do cliente que deseja obter o aluguel: ");
+    gets(cpf);
+    
+	posicaoCpf = buscarCpf(cliente, cpf, contCliente);
+    
+	if(posicaoCpf != -1) {
+        printf("\nDigite o código do veículo: ");
+        gets(codigo);
+        
+		posicaoCodigo = buscarCodigo(veiculo, codigo, contVeiculo);
+        
+		if(posicaoCodigo != -1) {
+            printf("\nDigite a data de entrada: ");
+            printf("\nDia (dd): ");
+            scanf("%d", &diaEntrada);
+            printf("Mês (mm): ");
+            scanf("%d", &mesEntrada);
+            printf("Ano (aaaa): ");
+            scanf("%d", &anoEntrada);
+            printf("\nDigite a data de saída: ");
+            printf("\nDia (dd): ");
+            scanf("%d", &diaSaida);
+            printf("Mês (mm): ");
+            scanf("%d", &mesSaida);
+            printf("Ano (aaaa): ");
+            scanf("%d", &anoSaida);
+            
+			posicaoAluguel = buscarAluguel(aluguel, cpf, codigo, &diaEntrada, &mesEntrada, &anoEntrada, &diaSaida, &mesSaida, &anoSaida, contAluguel);
+            printf("Posição aluguel: %d",posicaoAluguel );
+            
+			if (posicaoAluguel == -1) { //-1 É PQ O ALUGUEL NÃO EXISTE, ENTÃO PODE CADASTRAR
+                strcpy(aluguel[*contAluguel].cpf, cpf); 
+                strcpy(aluguel[*contAluguel].codigo, codigo);            
+                aluguel[*contAluguel].dataEntrada.dia = diaEntrada;
+                aluguel[*contAluguel].dataEntrada.mes = mesEntrada;
+                aluguel[*contAluguel].dataEntrada.ano = anoEntrada;
+                aluguel[*contAluguel].dataSaida.dia = diaSaida;
+                aluguel[*contAluguel].dataSaida.mes = mesSaida;
+                aluguel[*contAluguel].dataSaida.ano = anoSaida;
+                
+				printf("\n\nAluguel incluído com sucesso!\n");  
+                printf("\n\n--------------------------------------------------\n");
+                (*contAluguel)++;   
+            } else {
+                printf("\nJá exite aluguel com cpf %s e código %s nessas datas.\nTente novamente.\n", cpf, codigo);
+            }
+        } else{
+            printf("\nO código %s não é cadastrado.", codigo);
+            printf("\n\n--------------------------------------------------\n");
+        }  
+		         
+    } else {
+        printf("\nO cpf %s não é cadastrado.", cpf); 
+        printf("\n\n--------------------------------------------------\n");
+    }
+	
 }
 
 
 //******************************************************
 //MENU[3][4] Função que altera aluguel com todos os dados
 void alterarAluguel(Alugueis aluguel[], int *contAluguel){
-//Mi
+	 char cpf [15], codigo [6];
+	int posicaoAluguel, posicaoCpf, posicaoCodigo, diaEntrada, mesEntrada, anoEntrada, diaSaida, mesSaida, anoSaida;
+	
+	fflush(stdin);
+ 	printf("\nDigite o cpf do cliente que deseja obter o aluguel: ");
+	gets(cpf);
+	
+	posicaoCpf = buscarCpf(cliente, cpf, contCliente);
+	
+	if(posicaoCpf != -1) {
+		printf("\nDigite o código do veículo: ");
+		gets(codigo);
+				
+		posicaoCodigo = buscarCodigo(veiculo, codigo, contVeiculo);
+		
+		if(posicaoCodigo != -1) {
+			printf("\nDigite a data de entrada: ");
+			printf("\nDia (dd): ");
+			scanf("%d", &diaEntrada);
+			printf("Mês (mm): ");
+    		scanf("%d", &mesEntrada);
+    		printf("Ano (aaaa): ");
+    		scanf("%d", &anoEntrada);
+    		
+    		printf("\nDigite a data de saída: ");
+    		printf("\nDia (dd): ");
+    		scanf("%d", &diaSaida);
+    		printf("Mês (mm): ");
+    		scanf("%d", &mesSaida);
+    		printf("Ano (aaaa): ");
+			scanf("%d", &anoSaida);
+			
+			posicaoAluguel = buscarAluguel(aluguel, cpf, codigo, &diaEntrada, &mesEntrada, &anoEntrada, &diaSaida, &mesSaida, &anoSaida, contAluguel);
+			
+			if (posicaoAluguel != -1) {
+				
+				//Codigo Michelle			
+				
+			} else {
+				printf("\nNão exite aluguéis com cpf %s e código %s nessas datas.", cpf, codigo);
+				printf("\n\n--------------------------------------------------\n");
+			}
+			
+		} else {
+			printf("\nO código %s não é cadastrado.", codigo);
+    		printf("\n\n--------------------------------------------------\n");
+		}			
+		
+	} else {
+		printf("\nO cpf %s não é cadastrado.", cpf); 
+  		printf("\n\n--------------------------------------------------\n");
+	}
 }
-
 
 //******************************************************
 //MENU[3][5] Função que lista o veículo por código
