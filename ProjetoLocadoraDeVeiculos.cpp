@@ -46,7 +46,7 @@ typedef struct { //thiane
 typedef struct { //thiane
     char cpf[15], codigo[6];
     Data dataEntrada, dataSaida;
-} Alugueis;
+} Alugueis, AlugueisPorCpf;
 
 //******************************************************
 //*****************Definindo as Funções*****************
@@ -183,6 +183,17 @@ void criarExemplosAlugueis(Alugueis aluguel[], int *contAluguel) {
 	aluguel[*contAluguel].dataSaida.mes = 04;
 	aluguel[*contAluguel].dataSaida.ano = 2022;
     (*contAluguel)++;
+    
+    //Exemplo Aluguel3
+    strcpy(aluguel[*contAluguel].cpf, "111.111.111-11");
+    strcpy(aluguel[*contAluguel].codigo, "MT002");
+	aluguel[*contAluguel].dataEntrada.dia = 25;
+	aluguel[*contAluguel].dataEntrada.mes = 04;
+	aluguel[*contAluguel].dataEntrada.ano = 2022;
+	aluguel[*contAluguel].dataSaida.dia = 28;
+	aluguel[*contAluguel].dataSaida.mes = 04;
+	aluguel[*contAluguel].dataSaida.ano = 2022;
+	(*contAluguel)++;
 }
 
 //******************************************************
@@ -761,8 +772,27 @@ void excluirAluguel(Alugueis aluguel[], Clientes cliente[], Veiculos veiculo[], 
 
 //******************************************************
 //MENU[4][1] Função que mostra o relatório dos aluguéis por cpf do cliente
-void listarAlugueisPorCpf() {}
-
+void listarAlugueisPorCpfDoCliente(Alugueis aluguel[], int *contAluguel) {
+	int i, contPorCpf=0;
+	char cpf[15];
+	
+	fflush(stdin);
+ 	printf("\nDigite o cpf do cliente que deseja obter o aluguel: ");
+	gets(cpf);
+    
+    for(i = 0; i < *contAluguel; i++) {
+		   
+        if(strcmp(aluguel[i].cpf, cpf) == 0) {
+            printf("\n--- Dados do Aluguel %d ---\n", contPorCpf + 1);
+        	printf("\nCpf do Cliente: %s", aluguel[i].cpf);
+        	printf("\nCódigo do veículo: %s", aluguel[i].codigo);
+        	printf("\nData de Entrada: %d/%d/%d", aluguel[i].dataEntrada.dia, aluguel[i].dataEntrada.mes, aluguel[i].dataEntrada.ano);
+        	printf("\nData de Saída: %d/%d/%d\n", aluguel[i].dataSaida.dia, aluguel[i].dataSaida.mes, aluguel[i].dataSaida.ano);
+        	
+        	contPorCpf++;
+        }
+    }
+}
 //******************************************************
 //MENU[4][2] Função que mostra o relatório dos aluguéis por código do veículo
 void listarAlugueisPorCodigo() {}
@@ -951,6 +981,7 @@ main() {
                         case 1:
                            system("cls");
                             printf("\n\t------ LISTAR ALUGUÉIS POR CPF DO CLIENTE ------\n\n");
+                            listarAlugueisPorCpfDoCliente(aluguel, &contAluguel);
                             system("Pause");     
                             break;
                         case 2:
