@@ -795,7 +795,28 @@ void listarAlugueisPorCpfDoCliente(Alugueis aluguel[], int *contAluguel) {
 }
 //******************************************************
 //MENU[4][2] Função que mostra o relatório dos aluguéis por código do veículo
-void listarAlugueisPorCodigo() {}
+void listarAlugueisPorCodigo(Alugueis aluguel[], int *contAluguel) {
+	int i, contPorCodigo=0;
+	char codigo[6];
+	
+	fflush(stdin);
+	printf("\nDigite o código do veículo: ");
+	gets(codigo);
+	
+	for(i = 0; i < *contAluguel; i++) {
+		   
+        if(strcmp(aluguel[i].codigo, codigo) == 0) {
+            printf("\n--- Dados do Aluguel %d ---\n", contPorCodigo + 1);
+        	printf("\nCpf do Cliente: %s", aluguel[i].cpf);
+        	printf("\nCódigo do veículo: %s", aluguel[i].codigo);
+        	printf("\nData de Entrada: %d/%d/%d", aluguel[i].dataEntrada.dia, aluguel[i].dataEntrada.mes, aluguel[i].dataEntrada.ano);
+        	printf("\nData de Saída: %d/%d/%d\n", aluguel[i].dataSaida.dia, aluguel[i].dataSaida.mes, aluguel[i].dataSaida.ano);
+        	
+        	contPorCodigo++;
+        }
+    }
+
+}
 
 //******************************************************
 //MENU[4][3] Função que mostra o relatório dos aluguéis por período de tempo
@@ -987,6 +1008,7 @@ main() {
                         case 2:
                         	system("cls");
                             printf("\n\t------ LISTAR ALUGUÉIS: CÓDIGO DE VEÍCULO ------\n\n");
+                            listarAlugueisPorCodigo(aluguel, &contAluguel); 
                             system("Pause"); 
                             break;
                         case 3:
