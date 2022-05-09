@@ -176,10 +176,10 @@ void criarExemplosAlugueis(Alugueis aluguel[], int *contAluguel) {
     //Exemplo Aluguel2
     strcpy(aluguel[*contAluguel].cpf, "222.222.222-22");
     strcpy(aluguel[*contAluguel].codigo, "MT002");
-	aluguel[*contAluguel].dataEntrada.dia = 10;
+	aluguel[*contAluguel].dataEntrada.dia = 15;
 	aluguel[*contAluguel].dataEntrada.mes = 04;
 	aluguel[*contAluguel].dataEntrada.ano = 2022;
-	aluguel[*contAluguel].dataSaida.dia = 12;
+	aluguel[*contAluguel].dataSaida.dia = 18;
 	aluguel[*contAluguel].dataSaida.mes = 04;
 	aluguel[*contAluguel].dataSaida.ano = 2022;
     (*contAluguel)++;
@@ -792,6 +792,9 @@ void listarAlugueisPorCpfDoCliente(Alugueis aluguel[], int *contAluguel) {
         	contPorCpf++;
         }
     }
+    if(contPorCpf==0){
+    	printf("\nNão exite aluguéis com o cpf %s fornecido.\n", cpf);
+	}
 }
 //******************************************************
 //MENU[4][2] Função que mostra o relatório dos aluguéis por código do veículo
@@ -815,12 +818,55 @@ void listarAlugueisPorCodigo(Alugueis aluguel[], int *contAluguel) {
         	contPorCodigo++;
         }
     }
+    
+    if(contPorCodigo==0){
+    	printf("\nNão exite aluguéis com o código de veículo %s fornecido.\n", codigo);
+	}
 
 }
 
 //******************************************************
 //MENU[4][3] Função que mostra o relatório dos aluguéis por período de tempo
-void listarAlugueisPorTempo() {}
+void listarAlugueisPorTempo(Alugueis aluguel[], int *contAluguel) {
+	int i, contPorData=0;
+	int diaEntrada, mesEntrada, anoEntrada, diaSaida, mesSaida, anoSaida;
+	char codigo[6];
+	
+	fflush(stdin);
+	printf("\nDigite a data de entrada: ");
+    printf("\nDia (dd): ");
+    scanf("%d", &diaEntrada);
+    printf("Mês (mm): ");
+    scanf("%d", &mesEntrada);
+    printf("Ano (aaaa): ");
+    scanf("%d", &anoEntrada);
+    printf("\nDigite a data de saída: ");
+    printf("\nDia (dd): ");
+    scanf("%d", &diaSaida);
+    printf("Mês (mm): ");
+    scanf("%d", &mesSaida);
+    printf("Ano (aaaa): ");
+    scanf("%d", &anoSaida);
+	
+	for(i = 0; i < *contAluguel; i++) {
+		   
+        if(aluguel[i].dataEntrada.dia==diaEntrada && aluguel[i].dataEntrada.mes==mesEntrada && aluguel[i].dataEntrada.ano==anoEntrada &&
+        aluguel[i].dataSaida.dia==diaSaida && aluguel[i].dataSaida.mes==mesSaida && aluguel[i].dataSaida.ano==anoSaida) {
+            printf("\n--- Dados do Aluguel %d ---\n", contPorData + 1);
+        	printf("\nCpf do Cliente: %s", aluguel[i].cpf);
+        	printf("\nCódigo do veículo: %s", aluguel[i].codigo);
+        	printf("\nData de Entrada: %d/%d/%d", aluguel[i].dataEntrada.dia, aluguel[i].dataEntrada.mes, aluguel[i].dataEntrada.ano);
+        	printf("\nData de Saída: %d/%d/%d\n", aluguel[i].dataSaida.dia, aluguel[i].dataSaida.mes, aluguel[i].dataSaida.ano);
+        	
+        	contPorData++;
+        }
+    }
+    
+    if(contPorData==0){
+    	printf("Não existe aluguéis com essas datas fornecidas.\n");
+	}
+    
+}
 
 //******************************************************
 //Função principal- chama as demais funções do código
@@ -1014,6 +1060,7 @@ main() {
                         case 3:
                         	system("cls");
                             printf("\n\t------ LISTAR ALUGUÉIS: PERÍODO DE TEMPO ------\n\n");
+                            listarAlugueisPorTempo(aluguel, &contAluguel);
                             system("Pause"); 
                             break;
                         case 4:
