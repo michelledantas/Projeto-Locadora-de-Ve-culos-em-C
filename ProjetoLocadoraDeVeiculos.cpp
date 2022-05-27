@@ -218,12 +218,10 @@ int buscarCodigo(Veiculos veiculo[], char codigo[], int *contVeiculo) {
     int i, verifica = 0;
     
     for(i = 0; i < *contVeiculo && verifica == 0; i++) { 
-	     
         if(strcmp(veiculo[i].codigo, codigo) == 0) {
             verifica = 1;
             return i;
         }
-        
     }
     return -1;
 }
@@ -776,25 +774,38 @@ void listarAlugueisPorCpfDoCliente(Alugueis aluguel[], int *contAluguel) {
 	int i, contPorCpf=0;
 	char cpf[15];
 	
-	fflush(stdin);
- 	printf("\nDigite o cpf do cliente que deseja obter o aluguel: ");
-	gets(cpf);
-    
-    for(i = 0; i < *contAluguel; i++) {
-		   
-        if(strcmp(aluguel[i].cpf, cpf) == 0) {
-            printf("\n--- Dados do Aluguel %d ---\n", contPorCpf + 1);
-        	printf("\nCpf do Cliente: %s", aluguel[i].cpf);
-        	printf("\nCódigo do veículo: %s", aluguel[i].codigo);
-        	printf("\nData de Entrada: %d/%d/%d", aluguel[i].dataEntrada.dia, aluguel[i].dataEntrada.mes, aluguel[i].dataEntrada.ano);
-        	printf("\nData de Saída: %d/%d/%d\n", aluguel[i].dataSaida.dia, aluguel[i].dataSaida.mes, aluguel[i].dataSaida.ano);
-        	
-        	contPorCpf++;
-        }
-    }
-    if(contPorCpf==0){
-    	printf("\nNão exite aluguéis com o cpf %s fornecido.\n", cpf);
+	FILE *arq;
+	arq = fopen("relatorioAluguelPorCPF.txt","w");
+	if(arq==NULL){
+		printf("Não foi possível abrir o arquivo");
+		exit(0); //aborta a execução do programa
 	}
+	else {
+		/*seguem as instruções que devem ser executadas, se o arquivo foi aberto com sucesso*/
+		
+		fflush(stdin);
+	 	printf("\nDigite o cpf do cliente que deseja obter o aluguel: ");
+		gets(cpf);
+	    
+	    for(i = 0; i < *contAluguel; i++) {
+			   
+	        if(strcmp(aluguel[i].cpf, cpf) == 0) {
+	            fprintf(arq,"\n--- Dados do Aluguel %d ---\n", contPorCpf + 1);
+	        	fprintf(arq,"\nCpf do Cliente: %s", aluguel[i].cpf);
+	        	fprintf(arq,"\nCódigo do veículo: %s", aluguel[i].codigo);
+	        	fprintf(arq,"\nData de Entrada: %d/%d/%d", aluguel[i].dataEntrada.dia, aluguel[i].dataEntrada.mes, aluguel[i].dataEntrada.ano);
+	        	fprintf(arq,"\nData de Saída: %d/%d/%d\n", aluguel[i].dataSaida.dia, aluguel[i].dataSaida.mes, aluguel[i].dataSaida.ano);
+	        	
+	        	contPorCpf++;
+	        }
+	    }
+	    fclose(arq);
+	    if(contPorCpf==0){
+	    	printf("\nNão exite aluguéis com o cpf %s fornecido.\n", cpf);
+		}
+	}
+	
+	
 }
 //******************************************************
 //MENU[4][2] Função que mostra o relatório dos aluguéis por código do veículo
@@ -802,25 +813,34 @@ void listarAlugueisPorCodigo(Alugueis aluguel[], int *contAluguel) {
 	int i, contPorCodigo=0;
 	char codigo[6];
 	
-	fflush(stdin);
-	printf("\nDigite o código do veículo: ");
-	gets(codigo);
-	
-	for(i = 0; i < *contAluguel; i++) {
-		   
-        if(strcmp(aluguel[i].codigo, codigo) == 0) {
-            printf("\n--- Dados do Aluguel %d ---\n", contPorCodigo + 1);
-        	printf("\nCpf do Cliente: %s", aluguel[i].cpf);
-        	printf("\nCódigo do veículo: %s", aluguel[i].codigo);
-        	printf("\nData de Entrada: %d/%d/%d", aluguel[i].dataEntrada.dia, aluguel[i].dataEntrada.mes, aluguel[i].dataEntrada.ano);
-        	printf("\nData de Saída: %d/%d/%d\n", aluguel[i].dataSaida.dia, aluguel[i].dataSaida.mes, aluguel[i].dataSaida.ano);
-        	
-        	contPorCodigo++;
-        }
-    }
-    
-    if(contPorCodigo==0){
-    	printf("\nNão exite aluguéis com o código de veículo %s fornecido.\n", codigo);
+	FILE *arq;
+	arq = fopen("relatorioAluguelPorCodigoDoVeiculo.txt","w");
+	if(arq==NULL){
+		printf("Não foi possível abrir o arquivo");
+		exit(0); //aborta a execução do programa
+	}
+	else {
+		/*seguem as instruções que devem ser executadas, se o arquivo foi aberto com sucesso*/
+		fflush(stdin);
+		printf("\nDigite o código do veículo: ");
+		gets(codigo);
+		
+		for(i = 0; i < *contAluguel; i++) {
+			   
+	        if(strcmp(aluguel[i].codigo, codigo) == 0) {
+	            fprintf(arq,"\n--- Dados do Aluguel %d ---\n", contPorCodigo + 1);
+	        	fprintf(arq,"\nCpf do Cliente: %s", aluguel[i].cpf);
+	        	fprintf(arq,"\nCódigo do veículo: %s", aluguel[i].codigo);
+	        	fprintf(arq,"\nData de Entrada: %d/%d/%d", aluguel[i].dataEntrada.dia, aluguel[i].dataEntrada.mes, aluguel[i].dataEntrada.ano);
+	        	fprintf(arq,"\nData de Saída: %d/%d/%d\n", aluguel[i].dataSaida.dia, aluguel[i].dataSaida.mes, aluguel[i].dataSaida.ano);
+	        	
+	        	contPorCodigo++;
+	        }
+	    }
+	    fclose(arq);
+	    if(contPorCodigo==0){
+	    	printf("\nNão exite aluguéis com o código de veículo %s fornecido.\n", codigo);
+		}
 	}
 
 }
@@ -832,40 +852,49 @@ void listarAlugueisPorTempo(Alugueis aluguel[], int *contAluguel) {
 	int diaEntrada, mesEntrada, anoEntrada, diaSaida, mesSaida, anoSaida;
 	char codigo[6];
 	
-	fflush(stdin);
-	printf("\nDigite a data de entrada: ");
-    printf("\nDia (dd): ");
-    scanf("%d", &diaEntrada);
-    printf("Mês (mm): ");
-    scanf("%d", &mesEntrada);
-    printf("Ano (aaaa): ");
-    scanf("%d", &anoEntrada);
-    printf("\nDigite a data de saída: ");
-    printf("\nDia (dd): ");
-    scanf("%d", &diaSaida);
-    printf("Mês (mm): ");
-    scanf("%d", &mesSaida);
-    printf("Ano (aaaa): ");
-    scanf("%d", &anoSaida);
-	
-	for(i = 0; i < *contAluguel; i++) {
-		   
-        if(aluguel[i].dataEntrada.dia==diaEntrada && aluguel[i].dataEntrada.mes==mesEntrada && aluguel[i].dataEntrada.ano==anoEntrada &&
-        aluguel[i].dataSaida.dia==diaSaida && aluguel[i].dataSaida.mes==mesSaida && aluguel[i].dataSaida.ano==anoSaida) {
-            printf("\n--- Dados do Aluguel %d ---\n", contPorData + 1);
-        	printf("\nCpf do Cliente: %s", aluguel[i].cpf);
-        	printf("\nCódigo do veículo: %s", aluguel[i].codigo);
-        	printf("\nData de Entrada: %d/%d/%d", aluguel[i].dataEntrada.dia, aluguel[i].dataEntrada.mes, aluguel[i].dataEntrada.ano);
-        	printf("\nData de Saída: %d/%d/%d\n", aluguel[i].dataSaida.dia, aluguel[i].dataSaida.mes, aluguel[i].dataSaida.ano);
-        	
-        	contPorData++;
-        }
-    }
-    
-    if(contPorData==0){
-    	printf("Não existe aluguéis com essas datas fornecidas.\n");
+	FILE *arq;
+	arq = fopen("relatorioAluguelPorPeriodoDeTempo.txt","w");
+	if(arq==NULL){
+		printf("Não foi possível abrir o arquivo");
+		exit(0); //aborta a execução do programa
 	}
-    
+	else {
+		/*seguem as instruções que devem ser executadas, se o arquivo foi aberto com sucesso*/	
+		fflush(stdin);
+		printf("\nDigite a data de entrada: ");
+	    printf("\nDia (dd): ");
+	    scanf("%d", &diaEntrada);
+	    printf("Mês (mm): ");
+	    scanf("%d", &mesEntrada);
+	    printf("Ano (aaaa): ");
+	    scanf("%d", &anoEntrada);
+	    printf("\nDigite a data de saída: ");
+	    printf("\nDia (dd): ");
+	    scanf("%d", &diaSaida);
+	    printf("Mês (mm): ");
+	    scanf("%d", &mesSaida);
+	    printf("Ano (aaaa): ");
+	    scanf("%d", &anoSaida);
+		
+		for(i = 0; i < *contAluguel; i++) {
+			   
+	        if(aluguel[i].dataEntrada.dia==diaEntrada && aluguel[i].dataEntrada.mes==mesEntrada && aluguel[i].dataEntrada.ano==anoEntrada &&
+	        aluguel[i].dataSaida.dia==diaSaida && aluguel[i].dataSaida.mes==mesSaida && aluguel[i].dataSaida.ano==anoSaida) {
+	            fprintf(arq,"\n--- Dados do Aluguel %d ---\n", contPorData + 1);
+	        	fprintf(arq,"\nCpf do Cliente: %s", aluguel[i].cpf);
+	        	fprintf(arq,"\nCódigo do veículo: %s", aluguel[i].codigo);
+	        	fprintf(arq,"\nData de Entrada: %d/%d/%d", aluguel[i].dataEntrada.dia, aluguel[i].dataEntrada.mes, aluguel[i].dataEntrada.ano);
+	        	fprintf(arq,"\nData de Saída: %d/%d/%d\n", aluguel[i].dataSaida.dia, aluguel[i].dataSaida.mes, aluguel[i].dataSaida.ano);
+	        	
+	        	contPorData++;
+	        }
+	    }
+	    fclose(arq);
+	    if(contPorData==0){
+	    	printf("Não existe aluguéis com essas datas fornecidas.\n");
+		}
+	}
+	
 }
 
 //******************************************************

@@ -1,0 +1,7 @@
+
+--- Dados do Aluguel 1 ---
+
+Cpf do Cliente: 111.111.111-11
+Código do veículo: MT001
+Data de Entrada: 15/4/2022
+Data de Saída: 18/4/2022
